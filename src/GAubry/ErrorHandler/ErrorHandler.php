@@ -200,7 +200,7 @@ class ErrorHandler
      * @param Exception $oException
      * @see log()
      */
-    public function internalExceptionHandler (Exception $oException)
+    public function internalExceptionHandler (\Exception $oException)
     {
         if ( ! $this->_bDisplayErrors && ini_get('error_log') !== '' && ! $this->_bIsRunningFromCLI) {
             call_user_func($this->_sCallbackGenericDisplay, $oException);
@@ -241,7 +241,7 @@ class ErrorHandler
         if ($this->_bDisplayErrors) {
             if ($this->_bIsRunningFromCLI) {
                 file_put_contents('php://stderr', $mError . "\n", E_USER_ERROR);
-                if ($mError instanceof Exception && $mError->getCode() != 0) {
+                if ($mError instanceof \Exception && $mError->getCode() != 0) {
                     $iErrorCode = $mError->getCode();
                 } else {
                     $iErrorCode = self::$_iDefaultErrorCode;
@@ -253,7 +253,7 @@ class ErrorHandler
         }
 
         if ( ! empty($this->_sErrorLogPath)) {
-            if (is_array($mError) || (is_object($mError) && ! ($mError instanceof Exception))) {
+            if (is_array($mError) || (is_object($mError) && ! ($mError instanceof \Exception))) {
                 $mError = print_r($mError, true);
             }
             error_log($mError);
