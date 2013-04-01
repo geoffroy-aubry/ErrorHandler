@@ -188,7 +188,7 @@ class ErrorHandler
         if (($iErrorReporting & $iErrNo) !== 0) {
             $msg = "[from error handler] " . self::$aErrorTypes[$iErrNo]
                  . " -- $sErrStr, in file: '$sErrFile', line $iErrLine";
-            throw new ErrorException($msg, self::$_iDefaultErrorCode, $iErrNo, $sErrFile, $iErrLine);
+            throw new \ErrorException($msg, self::$_iDefaultErrorCode, $iErrNo, $sErrFile, $iErrLine);
         }
         return true;
     }
@@ -222,7 +222,7 @@ class ErrorHandler
     {
         $aError = error_get_last();
         if ($aError !== null && $aError['type'] === E_ERROR) {
-            $oException = new ErrorException(
+            $oException = new \ErrorException(
                 $aError['message'], self::$_iDefaultErrorCode, $aError['type'], $aError['file'], $aError['line']
             );
             call_user_func($this->_sCallbackGenericDisplay, $oException);
