@@ -175,12 +175,10 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('fatal_error.php', $aConfig);
-        $sErrorMsg = 'Fatal error: Call to undefined function f()';
-        $this->assertContains($sErrorMsg, $sStdOut);
-        $this->assertContains($aConfig['shutdown_msg'], $sStdOut);
-        $this->assertNotContains('We are sorry, an internal error occurred.', $sStdOut);
+        $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(255, $iErrorCode);
-        $this->assertEmpty($sStdErr);
+        $sErrorMsg = 'Fatal error: Call to undefined function f()';
+        $this->assertContains($sErrorMsg, $sStdErr);
         $sErrorMsg = 'Fatal error:  Call to undefined function f()';
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
