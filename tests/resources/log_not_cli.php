@@ -2,7 +2,7 @@
 
 require __DIR__ . '/bootstrap.php';
 
-$oProperty = new ReflectionProperty($oErrorHandler, '_bIsRunningFromCLI');
+$oProperty = new ReflectionProperty($oErrorHandler, 'bIsRunningFromCLI');
 $oProperty->setAccessible(true);
 $oProperty->setValue($oErrorHandler, false);
 

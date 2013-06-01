@@ -12,8 +12,9 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - ./vendor/bin/phpunit --configuration phpunit.xml --coverage-clover ./build/logs/clover.xml
-  - ./vendor/bin/phpcs --standard=PSR2 ./src/
+  - php vendor/bin/phpunit --configuration phpunit.xml
+  - php vendor/bin/phpcs --standard=PSR2 src/ tests/ -v
+  - php vendor/bin/phpmd src/ text codesize,design,unusedcode,naming,controversial
 
 after_script:
   - php vendor/bin/coveralls -v
