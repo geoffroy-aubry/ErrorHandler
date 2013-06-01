@@ -1,20 +1,24 @@
 {
     "name":         "geoffroy-aubry/errorhandler",
-    "description":  "bla bla",
-    "keywords":     ["bla"],
+    "description":  "Error and exception handler",
+    "keywords":     ["error handler", "exception handler"],
     "type":         "library",
     "license":      "LGPL-3.0+",
     "authors":      [
         {
             "name":     "Geoffroy Aubry",
-            "email":    "gaubry@hi-media.com"
+            "email":    "geoffroy.aubry@free.fr"
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "geoffroy-aubry/helpers": "1.1.*"
     },
     "require-dev": {
-        "geoffroy-aubry/debug": "1.0.*"
+        "phpunit/phpunit":           ">=3.7",
+        "phpmd/phpmd":               "1.4.*",
+        "squizlabs/php_codesniffer": "1.4.*",
+        "satooshi/php-coveralls":    "dev-master"
     },
     "autoload": {
         "psr-0": {"GAubry\\ErrorHandler": "src/"}
