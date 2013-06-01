@@ -5,25 +5,27 @@ namespace GAubry\ErrorHandler;
 use GAubry\Helpers\Helpers;
 
 /**
- * Gestionnaire d'erreurs et d'exceptions, web ou CLI.
- *  - Transforme les erreurs en exceptions à partir d'un certain seuil, et bénéficie ainsi de la trace d'exécution.
- *  - En mode CLI, redirige les erreurs et exceptions sur le canal d'erreur (STDERR)
- *    et quitte avec le code d'erreur de l'exception ou un par défaut.
- *  - Possibilité de ne pas tenir compte des '@', c'est-à-dire des opréateurs de suppression d'erreur.
- *  - Gère les fatal errors
- *  - Callback de message par défaut quand les erreurs sont masquées
+ * Simple error and exception handler.
+ *   – wraps the error to an ErrorException instance according to error reporting level
+ *   – when running the PHP CLI, reports errors/exceptions to STDERR (even fatal error)
+ *     and uses exception code as exit status
+ *   – allows to deactivate '@' operator
+ *   – catches fatal error
+ *   – accepts callback to be executed at the end of the internal shutdown function
+ *   – accepts callback to display an apology when errors are hidden
+ *   – allows to ignore errors on some paths, useful with old libraries and deprecated code…
  *
- * NB : bien prendre soin en mode CLI lorsque l'on crée des exceptions de spécifier
- * un code d'erreur non nul. Exemple : new Exception('...', 1)
+ * Copyright (c) 2012 Geoffroy Aubry <geoffroy.aubry@free.fr>
+ * Licensed under the GNU Lesser General Public License v3 (LGPL version 3).
  *
  * @copyright 2012 Geoffroy Aubry <geoffroy.aubry@free.fr>
- * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @license http://www.gnu.org/licenses/lgpl.html
  */
 class ErrorHandler
 {
 
     /**
-     * Traduction des codes d'erreurs PHP.
+     * Error codes.
      * @var array
      * @see internalErrorHandler()
      */
@@ -44,31 +46,41 @@ class ErrorHandler
     );
 
     /**
-     * Est-on en mode CLI.
+     * CLI ?
      * @var bool
      */
     private $_bIsRunningFromCLI;
 
     /**
-     * Recense les répertoires exclus du spectre du gestionnaire interne d'erreur.
+     * Errors will be ignored on these paths.
+     * Useful with old libraries and deprecated code.
      *
      * @var array
      * @see addExcludedPath()
      */
     private $_aExcludedPaths;
 
+    /**
+     * Callback to display an apology when errors are hidden.
+     * @var callback
+     */
     private $_callbackGenericDisplay;
 
+    /**
+     * Callback to be executed at the end of the internal shutdown function
+     * @var callback
+     */
     private $_callbackAdditionalShutdownFct;
 
     /**
-     * Structure: array(
-     *  'display_errors'        => bool, Doit-on afficher les erreurs (à l'écran ou dans le canal d'erreur en mode CLI).
-     *  'error_log_path'        => string,
-     *  'error_reporting_level' => int,
-     *  'auth_error_suppr_op'   => bool, Autorise l'usage de l'opérateur de suppression d'erreur ou non ('@').
-     *  'default_error_code'    => int, Code d'erreur accompagnant les exceptions générées par internalErrorHandler() et log() en mode CLI.
-     * )
+     * Default config.
+     *   – 'display_errors'        => (bool) Determines whether errors should be printed to the screen
+     *                                as part of the output or if they should be hidden from the user.
+     *   – 'error_log_path'        => (string) Name of the file where script errors should be logged.
+     *   – 'error_reporting_level' => (int) Error reporting level.
+     *   – 'auth_error_suppr_op'   => (bool) Allows to deactivate '@' operator.
+     *   – 'default_error_code'    => (int) Default error code for errors converted into exceptions
+     *                                or for exceptions without code.
      * @var array
      */
     private static $_aDefaultConfig = array(
@@ -79,26 +91,32 @@ class ErrorHandler
         'default_error_code'    => 1
     );
 
+    /**
+     * Configuration.
+     * @var array
+     * @see self::$_aDefaultConfig
+     */
     private $_aConfig;
 
     /**
-     * Constructeur.
+     * Constructor.
      *
-     * @param bool $bDisplayErrors affiche ou non les erreurs à l'écran ou dans le canal d'erreur en mode CLI
-     * @param string $sErrorLogPath chemin du fichier de log d'erreur
-     * @param int $iErrorReportingLvl Seuil de remontée d'erreur, transmis à error_reporting()
-     * @param bool $bAuthErrSupprOp autoriser ou non l'usage de l'opérateur de suppression d'erreur ('@')
+     * @param array $aConfig see self::$_aDefaultConfig
      */
     public function __construct (array $aConfig=array())
     {
         $this->_aConfig = Helpers::arrayMergeRecursiveDistinct(self::$_aDefaultConfig, $aConfig);
         $this->_aExcludedPaths = array();
-        $this->_bIsRunningFromCLI = defined('STDIN');	// ou (PHP_SAPI === 'cli')
+        $this->_bIsRunningFromCLI = defined('STDIN');	// or (PHP_SAPI === 'cli')
         $this->_callbackGenericDisplay = array($this, 'displayDefaultApologies');
         $this->_callbackAdditionalShutdownFct = '';
 
         error_reporting($this->_aConfig['error_reporting_level']);
-        ini_set('display_errors', $this->_aConfig['display_errors']);
+        if ($this->_aConfig['display_errors'] && $this->_bIsRunningFromCLI) {
+            ini_set('display_errors', 'stderr');
+        } else {
+            ini_set('display_errors', $this->_aConfig['display_errors']);
+        }
         ini_set('log_errors', true);
         ini_set('html_errors', false);
         ini_set('display_startup_errors', true);
@@ -106,7 +124,6 @@ class ErrorHandler
             ini_set('error_log', $this->_aConfig['error_log_path']);
         }
         ini_set('ignore_repeated_errors', true);
-        ini_set('max_execution_time', 0);
 
         // Make sure we have a timezone for date functions. It is not safe to rely on the system's timezone settings.
         // Please use the date.timezone setting, the TZ environment variable
@@ -121,9 +138,8 @@ class ErrorHandler
     }
 
     /**
-     * Exclu un répertoire du spectre du gestionnaire interne d'erreur.
-     * Utile par exemple pour exclure une librairie codée en PHP4 et donc dépréciée.
-     * Le '/' en fin de chaîne n'est pas obligatoire.
+     * Allows to ignore errors on some paths, useful with old libraries and deprecated code…
+     * Trailing slash is optional.
      *
      * @param string $sPath
      * @see internalErrorHandler()
@@ -140,7 +156,8 @@ class ErrorHandler
     }
 
     /**
-     * \Exception passée en paramètre…
+     * Set callback to display an apology when errors are hidden.
+     * Current \Exception will be provided in parameter.
      *
      * @param callback $callbackGenericDisplay
      */
@@ -149,6 +166,11 @@ class ErrorHandler
         $this->_callbackGenericDisplay = $callbackGenericDisplay;
     }
 
+    /**
+     * Set callback to be executed at the end of the internal shutdown function.
+     *
+     * @param callback $callbackAdditionalShutdownFct
+     */
     public function setCallbackAdditionalShutdownFct ($callbackAdditionalShutdownFct)
     {
         $this->_callbackAdditionalShutdownFct = $callbackAdditionalShutdownFct;
@@ -194,11 +216,9 @@ class ErrorHandler
     }
 
     /**
-     * Gestionnaire d'exception.
-     * Log systématiquement l'erreur.
+     * Exception handler.
      *
-     * @param Exception $oException
-     * @see log()
+     * @param \Exception $oException
      */
     public function internalExceptionHandler (\Exception $oException)
     {
@@ -215,8 +235,7 @@ class ErrorHandler
     }
 
     /**
-     * Comportement ou message d'excuse sur erreur/exception non traitée lorsque l'affichage
-     * des erreurs à l'écran est désactivé.
+     * Default callback to display an apology when errors are hidden.
      */
     public function displayDefaultApologies ()
     {
@@ -224,6 +243,9 @@ class ErrorHandler
              . 'We apologize for any inconvenience this may cause</div>';
     }
 
+    /**
+     * Registered shutdown function.
+     */
     public function internalShutdownFunction ()
     {
         $aError = error_get_last();
@@ -233,7 +255,7 @@ class ErrorHandler
             );
             call_user_func($this->_callbackGenericDisplay, $oException);
         }
-        if ( ! empty($this->_callbackAdditionalShutdownFct)) {// @codeCoverageIgnore
+        if ( ! empty($this->_callbackAdditionalShutdownFct)) {
             call_user_func($this->_callbackAdditionalShutdownFct);
             // @codeCoverageIgnoreStart
         }
@@ -241,11 +263,9 @@ class ErrorHandler
     // @codeCoverageIgnoreEnd
 
     /**
-     * Log l'erreur spécifiée dans le fichier de log si défini.
-     * Si l'affichage des erreurs est activé, alors envoi l'erreur sur le canal d'erreur en mode CLI,
-     * ou réalise un print_r() sinon.
+     * According to context, logs specified error into STDERR, STDOUT or via error_log().
      *
-     * @param mixed $mError Erreur à loguer, tableau ou objet.
+     * @param mixed $mError Error to log. Can be string, array or object.
      */
     public function log ($mError)
     {
