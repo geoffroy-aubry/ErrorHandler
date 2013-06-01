@@ -4,13 +4,6 @@ namespace GAubry\ErrorHandler\Tests;
 
 use GAubry\ErrorHandler\ErrorHandler;
 
-/**
- *
- *
- * @TODO trigger_error
- * @TODO @
- * @TODO _aExcludedPaths
- */
 class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -29,12 +22,16 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    private function _exec ($sScriptName, array $aConfig)
+    private function exec ($sScriptName, array $aConfig)
     {
         $sResourcesDir = __DIR__ . '/../../resources';
         $sStdErrPath = tempnam(sys_get_temp_dir(), 'error-handler-');
         $sCodeCoverageJSONPath = tempnam(sys_get_temp_dir(), 'error-handler-');
-        $aConfig['error_log_path'] = ($aConfig['with_error_log_path'] ? tempnam(sys_get_temp_dir(), 'error-handler-') : '');
+        if ($aConfig['with_error_log_path']) {
+            $aConfig['error_log_path'] = tempnam(sys_get_temp_dir(), 'error-handler-');
+        } else {
+            $aConfig['error_log_path'] = '';
+        }
         $sConfig = base64_encode(json_encode($aConfig));
         $sCmd = "php $sResourcesDir/$sScriptName $sConfig"
               . " '$sCodeCoverageJSONPath'"
@@ -49,7 +46,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         unlink($sCodeCoverageJSONPath);
         $sErrorLogContent = file_get_contents($aConfig['error_log_path']);
         unlink($aConfig['error_log_path']);
-        if ( ! empty($aCoverage)) {
+        if (! empty($aCoverage)) {
             $this->getTestResultObject()->getCodeCoverage()->append($aCoverage);
         }
 
@@ -66,14 +63,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 1,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('control.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('control.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testNotice_WithDisplayErrors ()
+    public function testNoticeWithDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -83,7 +80,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('notice.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('notice.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals($aConfig['default_error_code'], $iErrorCode);
         $sErrorMsg = "exception 'ErrorException' with message '[from error handler] NOTICE"
@@ -92,7 +89,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testNotice_WithoutDisplayErrors ()
+    public function testNoticeWithoutDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -102,7 +99,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('notice.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('notice.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals($aConfig['default_error_code'], $iErrorCode);
         $this->assertEmpty($sStdErr);
@@ -111,7 +108,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testNotice_WithDisplayErrors_WithHighErrorLevel ()
+    public function testNoticeWithDisplayErrorsWithHighErrorLevel ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -121,14 +118,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('notice.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('notice.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testWarning_WithDisplayErrors ()
+    public function testWarningWithDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -138,7 +135,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('warning.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('warning.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals($aConfig['default_error_code'], $iErrorCode);
         $sErrorMsg = "exception 'ErrorException' with message '[from error handler] WARNING"
@@ -147,7 +144,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testWarning_WithDisplayErrors_WithHighErrorLevel ()
+    public function testWarningWithDisplayErrorsWithHighErrorLevel ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -157,14 +154,14 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('warning.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('warning.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testFatalError_WithDisplayErrors ()
+    public function testFatalErrorWithDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -174,7 +171,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('fatal_error.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('fatal_error.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(255, $iErrorCode);
         $sErrorMsg = 'Fatal error: Call to undefined function f()';
@@ -183,7 +180,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testFatalError_WithoutDisplayErrors ()
+    public function testFatalErrorWithoutDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -193,7 +190,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('fatal_error.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('fatal_error.php', $aConfig);
         $sApologiesMsg = '<div class="exception-handler-message">We are sorry, an internal error occurred.<br />'
                        . 'We apologize for any inconvenience this may cause</div>';
         $this->assertEquals($sApologiesMsg . $aConfig['shutdown_msg'], $sStdOut);
@@ -203,7 +200,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testLog_WithDisplayErrors ()
+    public function testLogWithDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -213,7 +210,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('log.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('log.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEquals("\na word\n" . print_r(array('key' => 'value'), true) . "\n", $sStdErr);
@@ -222,7 +219,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testLog_WithoutDisplayErrors ()
+    public function testLogWithoutDisplayErrors ()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -232,7 +229,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('log.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('log.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
@@ -241,7 +238,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testLog_NotCLI ()
+    public function testLogNotCLI ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -251,7 +248,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('log_not_cli.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('log_not_cli.php', $aConfig);
         $sMsg = "a word" . print_r(array('key' => 'value'), true) . 'Hello' . $aConfig['shutdown_msg'];
         $this->assertEquals($sMsg, $sStdOut);
         $this->assertEquals(0, $iErrorCode);
@@ -261,7 +258,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandler_WithErrorCode ()
+    public function testInternalExceptionHandlerWithErrorCode ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -272,7 +269,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-            $this->_exec('exception_with_error_code.php', $aConfig);
+            $this->exec('exception_with_error_code.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(3, $iErrorCode);
         $sErrorMsg = "exception 'RuntimeException' with message 'Bad !'";
@@ -280,7 +277,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandler_WithoutErrorCode ()
+    public function testInternalExceptionHandlerWithoutErrorCode ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -291,7 +288,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-            $this->_exec('exception_without_error_code.php', $aConfig);
+            $this->exec('exception_without_error_code.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals($aConfig['default_error_code'], $iErrorCode);
         $sErrorMsg = "exception 'RuntimeException' with message 'Bad !'";
@@ -299,7 +296,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandler_NotCLI ()
+    public function testInternalExceptionHandlerNotCLI ()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -310,7 +307,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-        $this->_exec('exception_not_cli.php', $aConfig);
+        $this->exec('exception_not_cli.php', $aConfig);
         $sApologiesMsg = '<div class="exception-handler-message">We are sorry, an internal error occurred.<br />'
                        . 'We apologize for any inconvenience this may cause</div>';
         $this->assertEquals($sApologiesMsg . $aConfig['shutdown_msg'], $sStdOut);
@@ -330,7 +327,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'default_error_code'    => 17,
             'shutdown_msg'          => 'down'
         );
-        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->_exec('exclude_path.php', $aConfig);
+        list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('exclude_path.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
@@ -348,7 +345,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-            $this->_exec('callback_generic_display.php', $aConfig);
+            $this->exec('callback_generic_display.php', $aConfig);
         $this->assertEquals('>>>Call to undefined function f()<<<' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(255, $iErrorCode);
         $sErrorMsg = 'Fatal error:  Call to undefined function f()';
@@ -356,7 +353,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testAtSign_NotAuthorized ()
+    public function testAtSignNotAuthorized ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -367,7 +364,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-            $this->_exec('at_sign.php', $aConfig);
+            $this->exec('at_sign.php', $aConfig);
         $this->assertEquals($aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals($aConfig['default_error_code'], $iErrorCode);
         $sErrorMsg = "exception 'ErrorException' with message '[from error handler] WARNING"
@@ -376,7 +373,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testAtSign_Authorized ()
+    public function testAtSignAuthorized ()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -387,7 +384,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) =
-            $this->_exec('at_sign.php', $aConfig);
+            $this->exec('at_sign.php', $aConfig);
         $this->assertEquals('Hello' . $aConfig['shutdown_msg'], $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);

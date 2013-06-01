@@ -10,7 +10,7 @@ $sCodeCoverageJSONPath = (string)$argv[2];
 xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
 $oErrorHandler = new ErrorHandler($aConfig);
 $oErrorHandler->setCallbackAdditionalShutdownFct(
-    function() use ($sCodeCoverageJSONPath, $aConfig) {
+    function () use ($sCodeCoverageJSONPath, $aConfig) {
         file_put_contents($sCodeCoverageJSONPath, json_encode(xdebug_get_code_coverage()));
         echo $aConfig['shutdown_msg'];
     }

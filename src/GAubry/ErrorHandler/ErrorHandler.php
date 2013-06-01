@@ -49,7 +49,7 @@ class ErrorHandler
      * CLI ?
      * @var bool
      */
-    private $_bIsRunningFromCLI;
+    private $bIsRunningFromCLI;
 
     /**
      * Errors will be ignored on these paths.
@@ -58,19 +58,19 @@ class ErrorHandler
      * @var array
      * @see addExcludedPath()
      */
-    private $_aExcludedPaths;
+    private $aExcludedPaths;
 
     /**
      * Callback to display an apology when errors are hidden.
      * @var callback
      */
-    private $_callbackGenericDisplay;
+    private $callbackGenericDisplay;
 
     /**
      * Callback to be executed at the end of the internal shutdown function
      * @var callback
      */
-    private $_callbackAdditionalShutdownFct;
+    private $callbackAdditionalShutdownFct;
 
     /**
      * Default config.
@@ -83,7 +83,7 @@ class ErrorHandler
      *                                or for exceptions without code.
      * @var array
      */
-    private static $_aDefaultConfig = array(
+    private static $aDefaultConfig = array(
         'display_errors'        => true,
         'error_log_path'        => '',
         'error_reporting_level' => -1,
@@ -94,34 +94,34 @@ class ErrorHandler
     /**
      * Configuration.
      * @var array
-     * @see self::$_aDefaultConfig
+     * @see self::$aDefaultConfig
      */
-    private $_aConfig;
+    private $aConfig;
 
     /**
      * Constructor.
      *
-     * @param array $aConfig see self::$_aDefaultConfig
+     * @param array $aConfig see self::$aDefaultConfig
      */
-    public function __construct (array $aConfig=array())
+    public function __construct (array $aConfig = array())
     {
-        $this->_aConfig = Helpers::arrayMergeRecursiveDistinct(self::$_aDefaultConfig, $aConfig);
-        $this->_aExcludedPaths = array();
-        $this->_bIsRunningFromCLI = defined('STDIN');	// or (PHP_SAPI === 'cli')
-        $this->_callbackGenericDisplay = array($this, 'displayDefaultApologies');
-        $this->_callbackAdditionalShutdownFct = '';
+        $this->aConfig = Helpers::arrayMergeRecursiveDistinct(self::$aDefaultConfig, $aConfig);
+        $this->aExcludedPaths = array();
+        $this->bIsRunningFromCLI = defined('STDIN');	// or (PHP_SAPI === 'cli')
+        $this->callbackGenericDisplay = array($this, 'displayDefaultApologies');
+        $this->callbackAdditionalShutdownFct = '';
 
-        error_reporting($this->_aConfig['error_reporting_level']);
-        if ($this->_aConfig['display_errors'] && $this->_bIsRunningFromCLI) {
+        error_reporting($this->aConfig['error_reporting_level']);
+        if ($this->aConfig['display_errors'] && $this->bIsRunningFromCLI) {
             ini_set('display_errors', 'stderr');
         } else {
-            ini_set('display_errors', $this->_aConfig['display_errors']);
+            ini_set('display_errors', $this->aConfig['display_errors']);
         }
         ini_set('log_errors', true);
         ini_set('html_errors', false);
         ini_set('display_startup_errors', true);
-        if ( ! empty($this->_aConfig['error_log_path'])) {
-            ini_set('error_log', $this->_aConfig['error_log_path']);
+        if (! empty($this->aConfig['error_log_path'])) {
+            ini_set('error_log', $this->aConfig['error_log_path']);
         }
         ini_set('ignore_repeated_errors', true);
 
@@ -150,8 +150,8 @@ class ErrorHandler
             $sPath .= '/';
         }
         $sPath = realpath($sPath);
-        if ( ! in_array($sPath, $this->_aExcludedPaths)) {
-            $this->_aExcludedPaths[] = $sPath;
+        if (! in_array($sPath, $this->aExcludedPaths)) {
+            $this->aExcludedPaths[] = $sPath;
         }
     }
 
@@ -159,21 +159,21 @@ class ErrorHandler
      * Set callback to display an apology when errors are hidden.
      * Current \Exception will be provided in parameter.
      *
-     * @param callback $callbackGenericDisplay
+     * @param callback $cbGenericDisplay
      */
-    public function setCallbackGenericDisplay ($callbackGenericDisplay)
+    public function setCallbackGenericDisplay ($cbGenericDisplay)
     {
-        $this->_callbackGenericDisplay = $callbackGenericDisplay;
+        $this->callbackGenericDisplay = $cbGenericDisplay;
     }
 
     /**
      * Set callback to be executed at the end of the internal shutdown function.
      *
-     * @param callback $callbackAdditionalShutdownFct
+     * @param callback $cbAddShutdownFct
      */
-    public function setCallbackAdditionalShutdownFct ($callbackAdditionalShutdownFct)
+    public function setCallbackAdditionalShutdownFct ($cbAddShutdownFct)
     {
-        $this->_callbackAdditionalShutdownFct = $callbackAdditionalShutdownFct;
+        $this->callbackAdditionalShutdownFct = $cbAddShutdownFct;
     }
 
     /**
@@ -190,46 +190,46 @@ class ErrorHandler
     public function internalErrorHandler ($iErrNo, $sErrStr, $sErrFile, $iErrLine)
     {
         // Si l'erreur provient d'un répertoire exclu de ce handler, alors l'ignorer.
-        foreach ($this->_aExcludedPaths as $sExcludedPath) {
+        foreach ($this->aExcludedPaths as $sExcludedPath) {
             if (stripos($sErrFile, $sExcludedPath) === 0) {
                 return true;
             }
         }
 
         // Gestion de l'éventuel @ (error suppression operator) :
-        if (
-            $this->_aConfig['error_reporting_level'] !== 0 && error_reporting() === 0
-            && $this->_aConfig['auth_error_suppr_op']
+        if ($this->aConfig['error_reporting_level'] !== 0
+            && error_reporting() === 0 && $this->aConfig['auth_error_suppr_op']
         ) {
             $iErrorReporting = 0;
         } else {
-            $iErrorReporting = $this->_aConfig['error_reporting_level'];
+            $iErrorReporting = $this->aConfig['error_reporting_level'];
         }
 
         // Le seuil de transformation en exception est-il atteint ?
         if (($iErrorReporting & $iErrNo) !== 0) {
             $msg = "[from error handler] " . self::$aErrorTypes[$iErrNo]
                  . " -- $sErrStr, in file: '$sErrFile', line $iErrLine";
-            throw new \ErrorException($msg, $this->_aConfig['default_error_code'], $iErrNo, $sErrFile, $iErrLine);
+            throw new \ErrorException($msg, $this->aConfig['default_error_code'], $iErrNo, $sErrFile, $iErrLine);
         }
         return true;
     }
 
     /**
      * Exception handler.
+     * @SuppressWarnings(ExitExpression)
      *
      * @param \Exception $oException
      */
     public function internalExceptionHandler (\Exception $oException)
     {
-        if ( ! $this->_aConfig['display_errors'] && ini_get('error_log') !== '' && ! $this->_bIsRunningFromCLI) {
-            call_user_func($this->_callbackGenericDisplay, $oException);
+        if (! $this->aConfig['display_errors'] && ini_get('error_log') !== '' && ! $this->bIsRunningFromCLI) {
+            call_user_func($this->callbackGenericDisplay, $oException);
         }
         $this->log($oException);
         if ($oException->getCode() != 0) {
             $iErrorCode = $oException->getCode();
         } else {
-            $iErrorCode = $this->_aConfig['default_error_code'];
+            $iErrorCode = $this->aConfig['default_error_code'];
         }
         exit($iErrorCode);
     }
@@ -249,14 +249,18 @@ class ErrorHandler
     public function internalShutdownFunction ()
     {
         $aError = error_get_last();
-        if ( ! $this->_aConfig['display_errors'] && is_array($aError) && $aError['type'] === E_ERROR) {
+        if (! $this->aConfig['display_errors'] && is_array($aError) && $aError['type'] === E_ERROR) {
             $oException = new \ErrorException(
-                $aError['message'], $this->_aConfig['default_error_code'], $aError['type'], $aError['file'], $aError['line']
+                $aError['message'],
+                $this->aConfig['default_error_code'],
+                $aError['type'],
+                $aError['file'],
+                $aError['line']
             );
-            call_user_func($this->_callbackGenericDisplay, $oException);
+            call_user_func($this->callbackGenericDisplay, $oException);
         }
-        if ( ! empty($this->_callbackAdditionalShutdownFct)) {
-            call_user_func($this->_callbackAdditionalShutdownFct);
+        if (! empty($this->callbackAdditionalShutdownFct)) {
+            call_user_func($this->callbackAdditionalShutdownFct);
             // @codeCoverageIgnoreStart
         }
     }
@@ -273,15 +277,15 @@ class ErrorHandler
             $mError = print_r($mError, true);
         }
 
-        if ($this->_aConfig['display_errors']) {
-            if ($this->_bIsRunningFromCLI) {
+        if ($this->aConfig['display_errors']) {
+            if ($this->bIsRunningFromCLI) {
                 file_put_contents('php://stderr', $mError . "\n", E_USER_ERROR);
             } else {
                 echo $mError;
             }
         }
 
-        if ( ! empty($this->_aConfig['error_log_path'])) {
+        if (! empty($this->aConfig['error_log_path'])) {
             error_log($mError);
         }
     }
