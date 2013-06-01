@@ -1,6 +1,6 @@
 ChangeLog
 =========
 
-## Version 1.y.z (2013-05-xx)
+## Version 1.1.0 (2013-06-01)
 
 First release on Github.
