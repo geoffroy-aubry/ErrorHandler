@@ -1,6 +1,6 @@
 # ErrorHandler
 [![Build Status](https://secure.travis-ci.org/geoffroy-aubry/ErrorHandler.png?branch=stable)](http://travis-ci.org/geoffroy-aubry/ErrorHandler)
-[![Coverage Status](https://coveralls.io/repos/geoffroy-aubry/ErrorHandler/badge.png)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
+[![Coverage Status](https://coveralls.io/repos/geoffroy-aubry/ErrorHandler/badge.png?branch=stable)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
 
 Simple error and exception handler:
 
