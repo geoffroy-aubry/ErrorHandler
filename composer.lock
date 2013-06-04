@@ -3,24 +3,30 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "09ff6ceecc63f8e027458fde664aa862",
+    "hash": "efe47ae81a8bbc6d760a33b8ec037c13",
     "packages": [
         {
             "name": "geoffroy-aubry/helpers",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geoffroy-aubry/Helpers.git",
-                "reference": "v1.1.0"
+                "reference": "v1.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geoffroy-aubry/Helpers/zipball/v1.1.0",
-                "reference": "v1.1.0",
+                "url": "https://api.github.com/repos/geoffroy-aubry/Helpers/zipball/v1.2.0",
+                "reference": "v1.2.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "1.4.*",
+                "phpunit/phpunit": ">=3.7",
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "1.4.*"
             },
             "type": "library",
             "autoload": {
@@ -40,9 +46,10 @@
             ],
             "description": "Some helpers used in several personal packages.",
             "keywords": [
-                "helpers"
+                "helpers",
+                "tools"
             ],
-            "time": "2013-05-19 22:22:04"
+            "time": "2013-06-03 21:20:49"
         }
     ],
     "packages-dev": [
@@ -727,26 +734,27 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.2.1",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "v2.2.1"
+                "reference": "v2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/v2.3.0",
+                "reference": "v2.3.0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.3",
+                "symfony/filesystem": ">=2.3,<3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -770,30 +778,36 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-01 10:42:10"
+            "time": "2013-05-18 21:11:24"
         },
         {
             "name": "symfony/console",
-            "version": "v2.2.1",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "v2.2.1"
+                "reference": "v2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.3.0",
+                "reference": "v2.3.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "symfony/event-dispatcher": ">=2.1,<3.0"
+            },
+            "suggest": {
+                "symfony/event-dispatcher": ""
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -817,21 +831,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-19 20:48:08"
+            "time": "2013-05-30 05:11:26"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.2.1",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "v2.2.1"
+                "reference": "v2.3.0-RC1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/v2.3.0-RC1",
+                "reference": "v2.3.0-RC1",
                 "shasum": ""
             },
             "require": {
@@ -841,13 +855,13 @@
                 "symfony/dependency-injection": ">=2.0,<3.0"
             },
             "suggest": {
-                "symfony/dependency-injection": "2.2.*",
-                "symfony/http-kernel": "2.2.*"
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -871,7 +885,54 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2013-02-11 11:26:43"
+            "time": "2013-05-13 14:36:40"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.3.0",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "v2.3.0-RC1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/v2.3.0-RC1",
+                "reference": "v2.3.0-RC1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-05-06 20:03:44"
         },
         {
             "name": "symfony/stopwatch",
@@ -922,17 +983,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.2.1",
+            "version": "v2.2.2",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "v2.2.1"
+                "reference": "v2.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.2.1",
-                "reference": "v2.2.1",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.2.2",
+                "reference": "v2.2.2",
                 "shasum": ""
             },
             "require": {
@@ -965,7 +1026,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-03-23 07:49:54"
+            "time": "2013-05-10 18:08:31"
         }
     ],
     "aliases": [
