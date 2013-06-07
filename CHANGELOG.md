@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+
+## Version 1.1.3 (2013-06-07)
+
+Doc:
+
+  - minor update of `README.md`.
+  
 ## Version 1.1.2 (2013-06-04)
 
 Dependencies:
@@ -11,7 +18,7 @@ Dependencies:
 
 Doc:
 
-  - URL of coveralls.io badge on README.md now follows stable branch.
+  - URL of coveralls.io badge on `README.md` now follows stable branch.
 
 ## Version 1.1.0 (2013-06-01)
 

@@ -31,14 +31,14 @@ $ curl -sS https://getcomposer.org/installer | php
         }
     }
 ```
-and run `php composer.phar install` from the terminal in the root of your project.
+and run `php composer.phar install` from the terminal into the root folder of your project.
 
 3. Include Composer's autoloader and use the `GAubry\ErrorHandler` class:
 ```php
     <?php
     
     require_once 'vendor/autoload.php';
-    use \GAubry\ErrorHandler\ErrorHandler;
+    use GAubry\ErrorHandler\ErrorHandler;
     
     $aConfig = array(
         'display_errors' => true,
@@ -53,10 +53,10 @@ and run `php composer.phar install` from the terminal in the root of your projec
 
 ## Copyrights & licensing
 Licensed under the GNU Lesser General Public License v3 (LGPL version 3).
-See [LICENSE](https://github.com/geoffroy-aubry/ErrorHandler/blob/stable/LICENSE) file for details.
+See [LICENSE](LICENSE) file for details.
 
 ## ChangeLog
-See [CHANGELOG](https://github.com/geoffroy-aubry/ErrorHandler/blob/stable/CHANGELOG.md) file for details.
+See [CHANGELOG](CHANGELOG.md) file for details.
 
 ## Running tests
 To run the test suite, simply:
