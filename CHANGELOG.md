@@ -1,6 +1,13 @@
-ChangeLog
-=========
+Change log
+==========
 
+
+## Version 1.1.5 (2013-07-03)
+
+Doc:
+
+  - [#2](https://github.com/geoffroy-aubry/ErrorHandler/issues/2): Add continuous integration section in `README.md`.
+  - [#1](https://github.com/geoffroy-aubry/ErrorHandler/issues/1): Add badge poser in `README.md`.
 
 ## Version 1.1.4 (2013-06-13)
 
