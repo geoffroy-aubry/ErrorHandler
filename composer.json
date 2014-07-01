@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "apigen/apigen":             "~2.8",
-        "phpmd/phpmd":               "~1.4",
+        "phpmd/phpmd":               "2.*",
         "phpunit/phpunit":           "3.7.*",
         "satooshi/php-coveralls":    "dev-master",
         "sebastian/phpcpd":          "*",
