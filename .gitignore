@@ -7,3 +7,6 @@
 composer.phar
 config.*
 conf/phpunit.xml
+/cache.properties
+/.twgit*
+/.idea/

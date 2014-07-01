@@ -81,6 +81,8 @@ class ErrorHandler
      *   – 'auth_error_suppr_op'   => (bool) Allows to deactivate '@' operator.
      *   – 'default_error_code'    => (int) Default error code for errors converted into exceptions
      *                                or for exceptions without code.
+     *   – 'error_div_class'       => (string) CSS class for <DIV> tags surrounding errors displayed
+     *                                in HTML context (non-CLI).
      * @var array
      */
     private static $aDefaultConfig = array(
@@ -88,7 +90,8 @@ class ErrorHandler
         'error_log_path'        => '',
         'error_reporting_level' => -1,
         'auth_error_suppr_op'   => false,
-        'default_error_code'    => 1
+        'default_error_code'    => 1,
+        'error_div_class'       => 'error'
     );
 
     /**
@@ -184,7 +187,8 @@ class ErrorHandler
      * @param string $sErrStr the error message.
      * @param string $sErrFile the filename that the error was raised in.
      * @param int $iErrLine the line number the error was raised at.
-     * @return boolean true, then the normal error handler does not continues.
+     * @throws \ErrorException if $iErrNo is present in $iErrorReporting
+     * @return boolean true, then the normal error handler does not continue.
      * @see addExcludedPath()
      */
     public function internalErrorHandler ($iErrNo, $sErrStr, $sErrFile, $iErrLine)
@@ -281,7 +285,7 @@ class ErrorHandler
             if ($this->bIsRunningFromCLI) {
                 file_put_contents('php://stderr', $mError . "\n", E_USER_ERROR);
             } else {
-                echo $mError;
+                echo '<div class="' . $this->aConfig['error_div_class'] . '">' . $mError . '</div>';
             }
         }
 
