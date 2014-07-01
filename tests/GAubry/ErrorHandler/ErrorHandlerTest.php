@@ -2,8 +2,6 @@
 
 namespace GAubry\ErrorHandler\Tests;
 
-use GAubry\ErrorHandler\ErrorHandler;
-
 class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -249,7 +247,10 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             'shutdown_msg'          => 'down'
         );
         list($sStdOut, $iErrorCode, $sStdErr, $sErrorLogContent) = $this->exec('log_not_cli.php', $aConfig);
-        $sMsg = "a word" . print_r(array('key' => 'value'), true) . 'Hello' . $aConfig['shutdown_msg'];
+        $sMsg = '<div class="error"></div>'
+              . '<div class="error">a word</div>'
+              . '<div class="error">' . print_r(array('key' => 'value'), true) . '</div>'
+              . 'Hello' . $aConfig['shutdown_msg'];
         $this->assertEquals($sMsg, $sStdOut);
         $this->assertEquals(0, $iErrorCode);
         $this->assertEmpty($sStdErr);
