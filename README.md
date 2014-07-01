@@ -30,7 +30,7 @@ $ curl -sS https://getcomposer.org/installer | php
 ```json
     {
         "require": {
-            "geoffroy-aubry/errorhandler": "1.0.*"
+            "geoffroy-aubry/errorhandler": "1.*"
         }
     }
 ```
