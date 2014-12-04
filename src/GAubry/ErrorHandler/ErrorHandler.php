@@ -145,14 +145,21 @@ class ErrorHandler
      * Trailing slash is optional.
      *
      * @param string $sPath
+     * @param bool   $bEnforce By default all paths are normalized with realpath().
+     *   Set TRUE to avoid normalization.
+     *   Useful, for example, with some external PHP modules:
+     *   Couchbase PHP module say error was raised in "[CouchbaseNative]/" filename…
      * @see internalErrorHandler()
      */
-    public function addExcludedPath ($sPath)
+
+    public function addExcludedPath ($sPath, $bEnforce=false)
     {
         if (substr($sPath, -1) !== '/') {
             $sPath .= '/';
         }
-        $sPath = realpath($sPath);
+        if (! $bEnforce) {
+            $sPath = realpath($sPath);
+        }
         if (! in_array($sPath, $this->aExcludedPaths)) {
             $this->aExcludedPaths[] = $sPath;
         }
@@ -183,10 +190,10 @@ class ErrorHandler
      * Customized error handler function: throws an Exception with the message error if @ operator not used
      * and error source is not in excluded paths.
      *
-     * @param int $iErrNo level of the error raised.
-     * @param string $sErrStr the error message.
+     * @param int    $iErrNo   level of the error raised.
+     * @param string $sErrStr  the error message.
      * @param string $sErrFile the filename that the error was raised in.
-     * @param int $iErrLine the line number the error was raised at.
+     * @param int    $iErrLine the line number the error was raised at.
      * @throws \ErrorException if $iErrNo is present in $iErrorReporting
      * @return boolean true, then the normal error handler does not continue.
      * @see addExcludedPath()

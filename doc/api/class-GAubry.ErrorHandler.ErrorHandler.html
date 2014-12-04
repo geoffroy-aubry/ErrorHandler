@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
+	<meta charset="utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
 
 	<title>Class GAubry\ErrorHandler\ErrorHandler | ErrorHandler</title>
 
-	<script type="text/javascript" src="resources/combined.js?1697010827"></script>
-	<script type="text/javascript" src="elementlist.js?3139482990"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<link rel="stylesheet" href="resources/style.css?3901564645">
 
 </head>
 
@@ -31,7 +29,7 @@
 			</ul>
 		</div>
 
-		<hr />
+		<hr>
 
 
 		<div id="elements">
@@ -53,10 +51,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
 	</form>
 
 	<div id="navigation">
@@ -101,7 +99,7 @@ ignore errors on some paths, useful with old libraries and deprecated
 code…</p>
 
 <p>Copyright (c) 2012 Geoffroy Aubry &lt;<a
-href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!---->free.fr</a>&gt;
+href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!-- -->free.fr</a>&gt;
 Licensed under the GNU Lesser General Public License v3 (LGPL version 3).</p>
 
 	</div>
@@ -117,20 +115,20 @@ Licensed under the GNU Lesser General Public License v3 (LGPL version 3).</p>
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-GAubry.html">GAubry</a>\<a href="namespace-GAubry.ErrorHandler.html">ErrorHandler</a><br />
+		<b>Namespace:</b> <a href="namespace-GAubry.html">GAubry</a>\<a href="namespace-GAubry.ErrorHandler.html">ErrorHandler</a><br>
 		
 
 				<b>Copyright:</b>
 				2012 Geoffroy Aubry &lt;<a
-href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!---->free.fr</a>&gt;<br />
+href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!-- -->free.fr</a>&gt;<br>
 				<b>License:</b>
-				<a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a><br />
-		<b>Located at</b> <a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#7-292" title="Go to source code">GAubry/ErrorHandler/ErrorHandler.php</a><br />
+				<a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a><br>
+		<b>Located at</b> <a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#7-303" title="Go to source code">GAubry/ErrorHandler/ErrorHandler.php</a><br>
 	</div>
 
 
 
-	<table class="summary" id="methods">
+	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
 	<tr data-order="__construct" id="___construct">
 
@@ -143,7 +141,7 @@ href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!---->free.fr</a>&g
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#101-138" title="Go to source code">__construct</a>( <span>array <var>$aConfig</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#104-141" title="Go to source code">__construct</a>( <span>array <var>$aConfig</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -160,7 +158,7 @@ href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!---->free.fr</a>&g
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$aConfig</var></dt>
-					<dd><code>array</code><br>$aConfig see self::$aDefaultConfig</dd>
+					<dd>see self::$aDefaultConfig</dd>
 				</dl></div>
 
 
@@ -181,7 +179,7 @@ href="mailto:geoffroy.aubry&#64;free.fr">geoffroy.aubry&#64;<!---->free.fr</a>&g
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addExcludedPath">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#140-156" title="Go to source code">addExcludedPath</a>( <span>string <var>$sPath</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#144-166" title="Go to source code">addExcludedPath</a>( <span>string <var>$sPath</var></span>, <span>boolean <var>$bEnforce</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			
@@ -200,14 +198,18 @@ deprecated code… Trailing slash is optional.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$sPath</var></dt>
-					<dd><code>string</code><br>$sPath</dd>
+					<dd></dd>
+					<dt><var>$bEnforce</var></dt>
+					<dd>By default all paths are normalized with realpath(). Set TRUE to avoid
+normalization. Useful, for example, with some external PHP modules: Couchbase
+PHP module say error was raised in "[CouchbaseNative]/" filename…</dd>
 				</dl></div>
 
 
 
 				<h4>See</h4>
 				<div class="list">
-						<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_internalErrorHandler">GAubry\ErrorHandler\ErrorHandler::internalErrorHandler()</a></code></code><br />
+						<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_internalErrorHandler">GAubry\ErrorHandler\ErrorHandler::internalErrorHandler()</a></code></code><br>
 				</div>
 
 
@@ -225,7 +227,7 @@ deprecated code… Trailing slash is optional.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCallbackGenericDisplay">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#158-167" title="Go to source code">setCallbackGenericDisplay</a>( <span>callable <var>$cbGenericDisplay</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#168-177" title="Go to source code">setCallbackGenericDisplay</a>( <span>callable <var>$cbGenericDisplay</var></span> )</code>
 
 		<div class="description short">
 			
@@ -244,7 +246,7 @@ will be provided in parameter.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$cbGenericDisplay</var></dt>
-					<dd><code>callable</code><br>$cbGenericDisplay</dd>
+					<dd></dd>
 				</dl></div>
 
 
@@ -265,7 +267,7 @@ will be provided in parameter.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCallbackAdditionalShutdownFct">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#169-177" title="Go to source code">setCallbackAdditionalShutdownFct</a>( <span>callable <var>$cbAddShutdownFct</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#179-187" title="Go to source code">setCallbackAdditionalShutdownFct</a>( <span>callable <var>$cbAddShutdownFct</var></span> )</code>
 
 		<div class="description short">
 			
@@ -282,7 +284,7 @@ will be provided in parameter.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$cbAddShutdownFct</var></dt>
-					<dd><code>callable</code><br>$cbAddShutdownFct</dd>
+					<dd></dd>
 				</dl></div>
 
 
@@ -303,7 +305,7 @@ will be provided in parameter.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_internalErrorHandler">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#179-215" title="Go to source code">internalErrorHandler</a>( <span>integer <var>$iErrNo</var></span>, <span>string <var>$sErrStr</var></span>, <span>string <var>$sErrFile</var></span>, <span>integer <var>$iErrLine</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#189-226" title="Go to source code">internalErrorHandler</a>( <span>integer <var>$iErrNo</var></span>, <span>string <var>$sErrStr</var></span>, <span>string <var>$sErrFile</var></span>, <span>integer <var>$iErrLine</var></span> )</code>
 
 		<div class="description short">
 			
@@ -322,24 +324,28 @@ if @ operator not used and error source is not in excluded paths.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$iErrNo</var></dt>
-					<dd><code>integer</code><br>$iErrNo level of the error raised.</dd>
+					<dd>level of the error raised.</dd>
 					<dt><var>$sErrStr</var></dt>
-					<dd><code>string</code><br>$sErrStr the error message.</dd>
+					<dd>the error message.</dd>
 					<dt><var>$sErrFile</var></dt>
-					<dd><code>string</code><br>$sErrFile the filename that the error was raised in.</dd>
+					<dd>the filename that the error was raised in.</dd>
 					<dt><var>$iErrLine</var></dt>
-					<dd><code>integer</code><br>$iErrLine the line number the error was raised at.</dd>
+					<dd>the line number the error was raised at.</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code>boolean</code><br>true, then the normal error handler does not continues.<br />
+					<code>boolean</code><br>true, then the normal error handler does not continue.<br>
 				</div>
 
+				<h4>Throws</h4>
+				<div class="list">
+					<code>ErrorException</code><br>if $iErrNo is present in $iErrorReporting<br>
+				</div>
 
 				<h4>See</h4>
 				<div class="list">
-						<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_addExcludedPath">GAubry\ErrorHandler\ErrorHandler::addExcludedPath()</a></code></code><br />
+						<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_addExcludedPath">GAubry\ErrorHandler\ErrorHandler::addExcludedPath()</a></code></code><br>
 				</div>
 
 
@@ -357,7 +363,7 @@ if @ operator not used and error source is not in excluded paths.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_internalExceptionHandler">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#217-235" title="Go to source code">internalExceptionHandler</a>( <span>Exception <var>$oException</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#228-246" title="Go to source code">internalExceptionHandler</a>( <span>Exception <var>$oException</var></span> )</code>
 
 		<div class="description short">
 			
@@ -374,7 +380,7 @@ if @ operator not used and error source is not in excluded paths.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$oException</var></dt>
-					<dd><code>Exception</code><br>$oException</dd>
+					<dd></dd>
 				</dl></div>
 
 
@@ -398,7 +404,7 @@ if @ operator not used and error source is not in excluded paths.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_displayDefaultApologies">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#237-244" title="Go to source code">displayDefaultApologies</a>( )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#248-255" title="Go to source code">displayDefaultApologies</a>( )</code>
 
 		<div class="description short">
 			
@@ -431,7 +437,7 @@ if @ operator not used and error source is not in excluded paths.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_internalShutdownFunction">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#246-266" title="Go to source code">internalShutdownFunction</a>( )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#257-277" title="Go to source code">internalShutdownFunction</a>( )</code>
 
 		<div class="description short">
 			
@@ -464,7 +470,7 @@ if @ operator not used and error source is not in excluded paths.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_log">#</a>
-		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#269-291" title="Go to source code">log</a>( <span>mixed <var>$mError</var></span> )</code>
+		<code><a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#280-302" title="Go to source code">log</a>( <span>mixed <var>$mError</var></span> )</code>
 
 		<div class="description short">
 			
@@ -483,7 +489,7 @@ error_log().</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$mError</var></dt>
-					<dd><code>mixed</code><br>$mError Error to log. Can be string, array or object.</dd>
+					<dd>Error to log. Can be string, array or object.</dd>
 				</dl></div>
 
 
@@ -506,7 +512,7 @@ error_log().</p>
 
 
 
-	<table class="summary" id="properties">
+	<table class="summary properties" id="properties">
 	<caption>Properties summary</caption>
 	<tr data-order="aErrorTypes" id="$aErrorTypes">
 		<td class="attributes"><code>
@@ -516,8 +522,25 @@ error_log().</p>
 
 		<td class="name">
 				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#27-46" title="Go to source code"><var>$aErrorTypes</var></a>
+
+			<div class="description short">
+				
+<p>Error codes.</p>
+
+			</div>
+
+			<div class="description detailed hidden">
+				
+<p>Error codes.</p>
+
+
+					<h4>See</h4>
+					<div class="list">
+							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_internalErrorHandler">GAubry\ErrorHandler\ErrorHandler::internalErrorHandler()</a></code></code><br>
+					</div>
+			</div>
 		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(
+		<td class="value"><div><a href="#$aErrorTypes" class="anchor">#</a><code><span class="php-keyword1">array</span>(
     E_ERROR             =&gt; <span class="php-quote">'ERROR'</span>,
     E_WARNING           =&gt; <span class="php-quote">'WARNING'</span>,
     E_PARSE             =&gt; <span class="php-quote">'PARSING ERROR'</span>,
@@ -531,27 +554,7 @@ error_log().</p>
     E_USER_NOTICE       =&gt; <span class="php-quote">'USER NOTICE'</span>,
     E_STRICT            =&gt; <span class="php-quote">'STRICT NOTICE'</span>,
     E_RECOVERABLE_ERROR =&gt; <span class="php-quote">'RECOVERABLE ERROR'</span>
-)</code></td>
-		<td class="description"><div>
-			<a href="#$aErrorTypes" class="anchor">#</a>
-
-			<div class="description short">
-				
-<p>Error codes.</p>
-
-			</div>
-
-			<div class="description detailed hidden">
-				
-<p>Error codes.</p>
-
-
-					<h4>See</h4>
-					<div class="list">
-							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_internalErrorHandler">GAubry\ErrorHandler\ErrorHandler::internalErrorHandler()</a></code></code><br />
-					</div>
-			</div>
-		</div></td>
+)</code></div></td>
 	</tr>
 	<tr data-order="bIsRunningFromCLI" id="$bIsRunningFromCLI">
 		<td class="attributes"><code>
@@ -561,10 +564,6 @@ error_log().</p>
 
 		<td class="name">
 				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#48-52" title="Go to source code"><var>$bIsRunningFromCLI</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$bIsRunningFromCLI" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -578,7 +577,8 @@ error_log().</p>
 
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$bIsRunningFromCLI" class="anchor">#</a><code></code></div></td>
 	</tr>
 	<tr data-order="aExcludedPaths" id="$aExcludedPaths">
 		<td class="attributes"><code>
@@ -588,10 +588,6 @@ error_log().</p>
 
 		<td class="name">
 				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#54-61" title="Go to source code"><var>$aExcludedPaths</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$aExcludedPaths" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -608,10 +604,11 @@ deprecated code.</p>
 
 					<h4>See</h4>
 					<div class="list">
-							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_addExcludedPath">GAubry\ErrorHandler\ErrorHandler::addExcludedPath()</a></code></code><br />
+							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#_addExcludedPath">GAubry\ErrorHandler\ErrorHandler::addExcludedPath()</a></code></code><br>
 					</div>
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$aExcludedPaths" class="anchor">#</a><code></code></div></td>
 	</tr>
 	<tr data-order="callbackGenericDisplay" id="$callbackGenericDisplay">
 		<td class="attributes"><code>
@@ -621,10 +618,6 @@ deprecated code.</p>
 
 		<td class="name">
 				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#63-67" title="Go to source code"><var>$callbackGenericDisplay</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$callbackGenericDisplay" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -638,7 +631,8 @@ deprecated code.</p>
 
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$callbackGenericDisplay" class="anchor">#</a><code></code></div></td>
 	</tr>
 	<tr data-order="callbackAdditionalShutdownFct" id="$callbackAdditionalShutdownFct">
 		<td class="attributes"><code>
@@ -648,10 +642,6 @@ deprecated code.</p>
 
 		<td class="name">
 				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#69-73" title="Go to source code"><var>$callbackAdditionalShutdownFct</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$callbackAdditionalShutdownFct" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -665,7 +655,8 @@ deprecated code.</p>
 
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$callbackAdditionalShutdownFct" class="anchor">#</a><code></code></div></td>
 	</tr>
 	<tr data-order="aDefaultConfig" id="$aDefaultConfig">
 		<td class="attributes"><code>
@@ -674,17 +665,7 @@ deprecated code.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#75-92" title="Go to source code"><var>$aDefaultConfig</var></a>
-		</td>
-		<td class="value"><code><span class="php-keyword1">array</span>(
-    <span class="php-quote">'display_errors'</span>        =&gt; <span class="php-keyword1">true</span>,
-    <span class="php-quote">'error_log_path'</span>        =&gt; <span class="php-quote">''</span>,
-    <span class="php-quote">'error_reporting_level'</span> =&gt; -<span class="php-num">1</span>,
-    <span class="php-quote">'auth_error_suppr_op'</span>   =&gt; <span class="php-keyword1">false</span>,
-    <span class="php-quote">'default_error_code'</span>    =&gt; <span class="php-num">1</span>
-)</code></td>
-		<td class="description"><div>
-			<a href="#$aDefaultConfig" class="anchor">#</a>
+				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#75-95" title="Go to source code"><var>$aDefaultConfig</var></a>
 
 			<div class="description short">
 				
@@ -698,7 +679,10 @@ be logged.<br />
 – 'auth_error_suppr_op' =&gt; (bool) Allows to deactivate '@' operator.<br />
 – 'default_error_code' =&gt; (int) Default error code for errors converted
 into exceptions<br />
-or for exceptions without code.</p>
+or for exceptions without code.<br />
+– 'error_div_class' =&gt; (string) CSS class for &lt;DIV&gt; tags surrounding
+errors displayed<br />
+in HTML context (non-CLI).</p>
 
 			</div>
 
@@ -710,11 +694,21 @@ hidden from the user. – 'error_log_path' =&gt; (string) Name of the file where
 script errors should be logged. – 'error_reporting_level' =&gt; (int) Error
 reporting level. – 'auth_error_suppr_op' =&gt; (bool) Allows to deactivate '@'
 operator. – 'default_error_code' =&gt; (int) Default error code for errors
-converted into exceptions or for exceptions without code.</p>
+converted into exceptions or for exceptions without code. – 'error_div_class'
+=&gt; (string) CSS class for &lt;DIV&gt; tags surrounding errors displayed in
+HTML context (non-CLI).</p>
 
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$aDefaultConfig" class="anchor">#</a><code><span class="php-keyword1">array</span>(
+    <span class="php-quote">'display_errors'</span>        =&gt; <span class="php-keyword1">true</span>,
+    <span class="php-quote">'error_log_path'</span>        =&gt; <span class="php-quote">''</span>,
+    <span class="php-quote">'error_reporting_level'</span> =&gt; -<span class="php-num">1</span>,
+    <span class="php-quote">'auth_error_suppr_op'</span>   =&gt; <span class="php-keyword1">false</span>,
+    <span class="php-quote">'default_error_code'</span>    =&gt; <span class="php-num">1</span>,
+    <span class="php-quote">'error_div_class'</span>       =&gt; <span class="php-quote">'error'</span>
+)</code></div></td>
 	</tr>
 	<tr data-order="aConfig" id="$aConfig">
 		<td class="attributes"><code>
@@ -723,11 +717,7 @@ converted into exceptions or for exceptions without code.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#94-99" title="Go to source code"><var>$aConfig</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$aConfig" class="anchor">#</a>
+				<a href="source-class-GAubry.ErrorHandler.ErrorHandler.html#97-102" title="Go to source code"><var>$aConfig</var></a>
 
 			<div class="description short">
 				
@@ -742,10 +732,11 @@ converted into exceptions or for exceptions without code.</p>
 
 					<h4>See</h4>
 					<div class="list">
-							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#$aDefaultConfig">GAubry\ErrorHandler\ErrorHandler::<var>$aDefaultConfig</var></a></code></code><br />
+							<code><code><a href="class-GAubry.ErrorHandler.ErrorHandler.html#$aDefaultConfig">GAubry\ErrorHandler\ErrorHandler::<var>$aDefaultConfig</var></a></code></code><br>
 					</div>
 			</div>
-		</div></td>
+		</td>
+		<td class="value"><div><a href="#$aConfig" class="anchor">#</a><code></code></div></td>
 	</tr>
 	</table>
 
@@ -761,5 +752,7 @@ converted into exceptions or for exceptions without code.</p>
 	</div>
 </div>
 </div>
+<script src="resources/combined.js?640726660"></script>
+<script src="elementlist.js?2079215334"></script>
 </body>
 </html>

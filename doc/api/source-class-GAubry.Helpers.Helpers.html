@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
-	<meta name="robots" content="noindex" />
+	<meta charset="utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
+	<meta name="robots" content="noindex">
 
 	<title>File helpers/src/GAubry/Helpers/Helpers.php | ErrorHandler</title>
 
-	<script type="text/javascript" src="resources/combined.js?1697010827"></script>
-	<script type="text/javascript" src="elementlist.js?3139482990"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<link rel="stylesheet" href="resources/style.css?3901564645">
 
 </head>
 
@@ -32,12 +30,13 @@
 			</ul>
 		</div>
 
-		<hr />
+		<hr>
 
 
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-GAubry.Helpers.Debug.html">Debug</a></li>
 				<li class="active"><a href="class-GAubry.Helpers.Helpers.html">Helpers</a></li>
 			</ul>
 
@@ -54,10 +53,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
 	</form>
 
 	<div id="navigation">
@@ -137,7 +136,7 @@
 </span></span><span id="48" class="l"><a class="l" href="#48"> 48: </a><span class="php-comment">     */</span>
 </span><span id="49" class="l"><a class="l" href="#49"> 49: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> <a id="_utf8Encode" href="#_utf8Encode">utf8Encode</a> (<span class="php-var">$str</span>)
 </span><span id="50" class="l"><a class="l" href="#50"> 50: </a>    {
-</span><span id="51" class="l"><a class="l" href="#51"> 51: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword2">utf8_encode</span>(<span class="php-keyword2">utf8_decode</span>(<span class="php-var">$str</span>)) == <span class="php-var">$str</span> ? <span class="php-var">$str</span> : <span class="php-keyword2">utf8_encode</span>(<span class="php-var">$str</span>));
+</span><span id="51" class="l"><a class="l" href="#51"> 51: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword2">preg_match</span>(<span class="php-quote">'//u'</span>, <span class="php-var">$str</span>) === <span class="php-num">1</span> ? <span class="php-var">$str</span> : <span class="php-keyword2">utf8_encode</span>(<span class="php-var">$str</span>));
 </span><span id="52" class="l"><a class="l" href="#52"> 52: </a>    }
 </span><span id="53" class="l"><a class="l" href="#53"> 53: </a>
 </span><span id="54" class="l"><a class="l" href="#54"> 54: </a>    <span class="php-comment">/**
@@ -391,5 +390,7 @@
 	</div>
 </div>
 </div>
+<script src="resources/combined.js?640726660"></script>
+<script src="elementlist.js?2079215334"></script>
 </body>
 </html>
