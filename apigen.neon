@@ -4,7 +4,7 @@ destination: doc/api
 
 extensions: [php]
 
-exclude: [*/tests/*, */Test/*, */vendor/composer]
+exclude: [*/tests/*, */Test/*, */vendor/composer, */examples/*]
 
 charset: UTF-8
 

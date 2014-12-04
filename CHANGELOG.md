@@ -2,6 +2,13 @@ Change log
 ==========
 
 
+## Version 1.3.0 (2014-12-04)
+
+Feature:
+
+  - [#5](https://github.com/geoffroy-aubry/ErrorHandler/issues/5): Allow to enforce paths specified in `addExcludedPath()`.
+    Useful, for example, with some external PHP modules referencing virtual filenames.
+
 ## Version 1.2.0 (2014-07-01)
 
 Feature:
