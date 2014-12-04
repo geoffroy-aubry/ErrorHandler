@@ -106,7 +106,7 @@ class ErrorHandler
      *
      * @param array $aConfig see self::$aDefaultConfig
      */
-    public function __construct (array $aConfig = array())
+    public function __construct(array $aConfig = array())
     {
         $this->aConfig = Helpers::arrayMergeRecursiveDistinct(self::$aDefaultConfig, $aConfig);
         $this->aExcludedPaths = array();
@@ -152,7 +152,7 @@ class ErrorHandler
      * @see internalErrorHandler()
      */
 
-    public function addExcludedPath ($sPath, $bEnforce=false)
+    public function addExcludedPath($sPath, $bEnforce = false)
     {
         if (substr($sPath, -1) !== '/') {
             $sPath .= '/';
@@ -171,7 +171,7 @@ class ErrorHandler
      *
      * @param callback $cbGenericDisplay
      */
-    public function setCallbackGenericDisplay ($cbGenericDisplay)
+    public function setCallbackGenericDisplay($cbGenericDisplay)
     {
         $this->callbackGenericDisplay = $cbGenericDisplay;
     }
@@ -181,7 +181,7 @@ class ErrorHandler
      *
      * @param callback $cbAddShutdownFct
      */
-    public function setCallbackAdditionalShutdownFct ($cbAddShutdownFct)
+    public function setCallbackAdditionalShutdownFct($cbAddShutdownFct)
     {
         $this->callbackAdditionalShutdownFct = $cbAddShutdownFct;
     }
@@ -198,7 +198,7 @@ class ErrorHandler
      * @return boolean true, then the normal error handler does not continue.
      * @see addExcludedPath()
      */
-    public function internalErrorHandler ($iErrNo, $sErrStr, $sErrFile, $iErrLine)
+    public function internalErrorHandler($iErrNo, $sErrStr, $sErrFile, $iErrLine)
     {
         // Si l'erreur provient d'un répertoire exclu de ce handler, alors l'ignorer.
         foreach ($this->aExcludedPaths as $sExcludedPath) {
@@ -231,7 +231,7 @@ class ErrorHandler
      *
      * @param \Exception $oException
      */
-    public function internalExceptionHandler (\Exception $oException)
+    public function internalExceptionHandler(\Exception $oException)
     {
         if (! $this->aConfig['display_errors'] && ini_get('error_log') !== '' && ! $this->bIsRunningFromCLI) {
             call_user_func($this->callbackGenericDisplay, $oException);
@@ -248,7 +248,7 @@ class ErrorHandler
     /**
      * Default callback to display an apology when errors are hidden.
      */
-    public function displayDefaultApologies ()
+    public function displayDefaultApologies()
     {
         echo '<div class="exception-handler-message">We are sorry, an internal error occurred.<br />'
              . 'We apologize for any inconvenience this may cause</div>';
@@ -257,7 +257,7 @@ class ErrorHandler
     /**
      * Registered shutdown function.
      */
-    public function internalShutdownFunction ()
+    public function internalShutdownFunction()
     {
         $aError = error_get_last();
         if (! $this->aConfig['display_errors'] && is_array($aError) && $aError['type'] === E_ERROR) {
@@ -282,7 +282,7 @@ class ErrorHandler
      *
      * @param mixed $mError Error to log. Can be string, array or object.
      */
-    public function log ($mError)
+    public function log($mError)
     {
         if (is_array($mError) || (is_object($mError) && ! ($mError instanceof \Exception))) {
             $mError = print_r($mError, true);

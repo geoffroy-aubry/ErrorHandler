@@ -8,7 +8,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    public function setUp ()
+    public function setUp()
     {
     }
 
@@ -20,7 +20,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    private function exec ($sScriptName, array $aConfig)
+    private function exec($sScriptName, array $aConfig)
     {
         $sResourcesDir = __DIR__ . '/../../resources';
         $sStdErrPath = tempnam(sys_get_temp_dir(), 'error-handler-');
@@ -51,7 +51,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         return array(implode("\n", $aOutput), $iErrorCode, $sStdErr, $sErrorLogContent);
     }
 
-    public function testControl ()
+    public function testControl()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -68,7 +68,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testNoticeWithDisplayErrors ()
+    public function testNoticeWithDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -87,7 +87,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testNoticeWithoutDisplayErrors ()
+    public function testNoticeWithoutDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -106,7 +106,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testNoticeWithDisplayErrorsWithHighErrorLevel ()
+    public function testNoticeWithDisplayErrorsWithHighErrorLevel()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -123,7 +123,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testWarningWithDisplayErrors ()
+    public function testWarningWithDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -142,7 +142,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testWarningWithDisplayErrorsWithHighErrorLevel ()
+    public function testWarningWithDisplayErrorsWithHighErrorLevel()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -159,7 +159,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testFatalErrorWithDisplayErrors ()
+    public function testFatalErrorWithDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -178,7 +178,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testFatalErrorWithoutDisplayErrors ()
+    public function testFatalErrorWithoutDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -198,7 +198,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testLogWithDisplayErrors ()
+    public function testLogWithDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -217,7 +217,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testLogWithoutDisplayErrors ()
+    public function testLogWithoutDisplayErrors()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -236,7 +236,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testLogNotCLI ()
+    public function testLogNotCLI()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -259,7 +259,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(print_r(array('key' => 'value'), true) . "\n", $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandlerWithErrorCode ()
+    public function testInternalExceptionHandlerWithErrorCode()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -278,7 +278,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandlerWithoutErrorCode ()
+    public function testInternalExceptionHandlerWithoutErrorCode()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -297,7 +297,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testInternalExceptionHandlerNotCLI ()
+    public function testInternalExceptionHandlerNotCLI()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -318,7 +318,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testAddExcludedPath ()
+    public function testAddExcludedPath()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -335,7 +335,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($sErrorLogContent);
     }
 
-    public function testSetCallbackGenericDisplay ()
+    public function testSetCallbackGenericDisplay()
     {
         $aConfig = array(
             'display_errors'        => false,
@@ -354,7 +354,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testAtSignNotAuthorized ()
+    public function testAtSignNotAuthorized()
     {
         $aConfig = array(
             'display_errors'        => true,
@@ -374,7 +374,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($sErrorMsg, $sErrorLogContent);
     }
 
-    public function testAtSignAuthorized ()
+    public function testAtSignAuthorized()
     {
         $aConfig = array(
             'display_errors'        => true,

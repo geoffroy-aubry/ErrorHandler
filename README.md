@@ -1,8 +1,8 @@
 # ErrorHandler
 
-[![Latest stable version](https://poser.pugx.org/geoffroy-aubry/ErrorHandler/v/stable.png "Latest stable version")](https://packagist.org/packages/geoffroy-aubry/ErrorHandler)
+[![Latest stable version](http://img.shields.io/packagist/v/geoffroy-aubry/ErrorHandler.svg "Latest stable version")](https://packagist.org/packages/geoffroy-aubry/ErrorHandler)
 [![Build Status](https://secure.travis-ci.org/geoffroy-aubry/ErrorHandler.png?branch=stable)](http://travis-ci.org/geoffroy-aubry/ErrorHandler)
-[![Coverage Status](https://coveralls.io/repos/geoffroy-aubry/ErrorHandler/badge.png?branch=stable)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
+[![Coverage Status](http://img.shields.io/coveralls/geoffroy-aubry/ErrorHandler/stable.svg)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
 [![Dependency Status](https://www.versioneye.com/user/projects/5354e190fe0d071c050011c1/badge.png)](https://www.versioneye.com/user/projects/5354e190fe0d071c050011c1)
 
 Simple error and exception handler:
@@ -87,7 +87,7 @@ See [CHANGELOG](CHANGELOG.md) file for details.
 ## Continuous integration
 
 [![Build Status](https://secure.travis-ci.org/geoffroy-aubry/ErrorHandler.png?branch=stable)](http://travis-ci.org/geoffroy-aubry/ErrorHandler)
-[![Coverage Status](https://coveralls.io/repos/geoffroy-aubry/ErrorHandler/badge.png?branch=stable)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
+[![Coverage Status](http://img.shields.io/coveralls/geoffroy-aubry/ErrorHandler/stable.svg)](https://coveralls.io/r/geoffroy-aubry/ErrorHandler)
 [![Dependency Status](https://www.versioneye.com/user/projects/5354e190fe0d071c050011c1/badge.png)](https://www.versioneye.com/user/projects/5354e190fe0d071c050011c1)
 
 Following commands are executed during each build and must report neither errors nor warnings:
